@@ -29,7 +29,7 @@ Copy code
 cd WEBDATAEXPLORER
 Install the required Python libraries if you haven't already:
 
-Create a virtual environment and activating it, then run the Django development server:
+Create a virtual environment and activate it, then run the Django development server:
 
 bash
 Copy code
