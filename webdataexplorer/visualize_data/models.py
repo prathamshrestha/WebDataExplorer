@@ -4,9 +4,9 @@ class DarazModel(models.Model):
     sn = models.IntegerField(primary_key=True)
 
     name = models.CharField(max_length=255, default="Item")
-    rating = models.DecimalField(max_digits=3, decimal_places=2, default=1.00)
-    price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    reviews = models.IntegerField(blank=True, null=True)
+    rating = models.DecimalField(max_digits=3, decimal_places=2, default=0.00)
+    price = models.CharField(max_length=255, blank=True, null=True)
+    reviews = models.TextField(blank=True, null=True)
     sold_by = models.CharField(max_length=255, blank=True, null=True)
     category = models.CharField(max_length=255, blank=True, null=True)
     
