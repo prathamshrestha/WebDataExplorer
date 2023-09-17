@@ -1,40 +1,73 @@
-import time
 import requests
-from typer import Typer
-from selenium import webdriver
-from selenium.webdriver.common.by import By
 from RPA.Browser.Selenium import Selenium
 
-app = Typer()
+# Define constants
 TIMEOUT = 10
+POST_API_URL = 'http://localhost:8000/visualize/create/'
+GET_API_URL = 'http://localhost:8000/visualize/data/'
+
 XPATH = {
-    'items':"//div[@class='gridItem--Yd0sa']//div[@class='info--ifj7U']//a",
-    'name':"//span[@class='pdp-mod-product-badge-title']",
-    'category':"//div[@id='pdp-nav']//ul//li[1]",
-    'price':"//div[contains(@class,'pdp-product-price')]/span",
-    'sold_by':"//div[@class='seller-name__detail']",
-    'rating':"//span[@class='score-average']",
-    'reviews':"//div[@class='mod-reviews']//div[@class='item']",
-    'about':"//a[normalize-space()='About Daraz']"
+    'items': "//div[@class='gridItem--Yd0sa']//div[@class='info--ifj7U']//a",
+    'name': "//span[@class='pdp-mod-product-badge-title']",
+    'category': "//div[@id='pdp-nav']//ul//li[1]",
+    'price': "//div[contains(@class,'pdp-product-price')]/span",
+    'sold_by': "//div[@class='seller-name__detail']",
+    'rating': "//span[@class='score-average']",
+    'reviews': "//div[@class='mod-reviews']//div[@class='item']",
+    'about': "//a[normalize-space()='About Daraz']"
 }
-API_URL = 'http://localhost:8000/visualize/create/'
 
-class DarazScrapper:
 
-    def __init__(self, category_url:str|None = None):
-        self.browser = Selenium()  
+class DarazScraper:
+    """
+    A class for scraping data from Daraz website.
+
+    Args:
+        category_url (str): The URL of the category to scrape.
+
+    Attributes:
+        browser (Selenium): A Selenium browser instance.
+        category_url (str): The URL of the category being scraped.
+    """
+
+    def __init__(self, category_url: str | None = None):
+        """
+        Initializes a new DarazScraper instance.
+
+        Args:
+            category_url (str): The URL of the category to scrape.
+        """
+        self.browser = Selenium()
         self.category_url = category_url
 
     def open_browser(self):
+        """
+        Opens the web browser and maximizes it.
+
+        Raises:
+            Exception: If the browser is not found.
+        """
         print('Opening Browser')
         self.browser.open_available_browser(url=self.category_url, maximized=True)
         print('Browser found')
 
     def is_daraz_link(self):
+        """
+        Checks if the provided URL is a valid Daraz link.
+
+        Returns:
+            bool: True if it's a valid Daraz link, False otherwise.
+        """
         prefix = "https://www.daraz.com.np/"
         return self.category_url.startswith(prefix)
 
     def search_item(self):
+        """
+        Searches for items on the Daraz website.
+
+        Returns:
+            list: A list of item links.
+        """
         item_data_list = []
         self.browser.wait_until_element_is_visible(XPATH['items'])
         items_elements = self.browser.find_elements(XPATH['items'])
@@ -42,6 +75,15 @@ class DarazScrapper:
         return item_data_list
 
     def collect_item_data(self, url):
+        """
+        Collects data for a specific item.
+
+        Args:
+            url (str): The URL of the item to collect data for.
+
+        Returns:
+            dict: A dictionary containing item data.
+        """
         items_data = {}
         self.browser.go_to(url)
         temp_item = {}
@@ -100,51 +142,94 @@ class DarazScrapper:
         items_data = temp_item.copy()
 
         return items_data
-    
+
 class PostAPI:
-    def __init__(self, api_url) -> None:
-        self.api_url = api_url
+    """
+    A class for interacting with a POST API.
+
+    Args:
+        post_api_url (str): The URL of the POST API.
+        get_api_url (str): The URL of the GET API for checking connectivity.
+    """
+
+    def __init__(self, post_api_url, get_api_url) -> None:
+        """
+        Initializes a new PostAPI instance.
+
+        Args:
+            post_api_url (str): The URL of the POST API.
+            get_api_url (str): The URL of the GET API for checking connectivity.
+        """
+        self.post_api_url = post_api_url
+        self.get_api_url = get_api_url
 
     def check_connection(self):
-        conn = requests.get(self.api_url)
-        if conn == 200:
+        """
+        Checks the connectivity to the GET API.
+
+        Returns:
+            bool: True if the connection is successful, False otherwise.
+        """
+        conn = requests.get(self.get_api_url)
+        if conn.status_code == 200:
             return True
         return False
-    
-    def post_data(self, datalist):
-        for data in datalist:
+
+    def post_data(self, data_list):
+        """
+        Posts data to the POST API.
+
+        Args:
+            data_list (list): A list of data to be posted.
+
+        Note:
+            If any element in the data_list is None, it will not be posted.
+        """
+        for data in data_list:
             if data is None:
                 break
-            conn = requests.post(self.api_url, data=data)
+            conn = requests.post(self.post_api_url, data=data)
             if conn.status_code == 200:
                 print(f'Post Successful')
             else:
                 print(f'Post unsuccessful')
 
+
 if __name__ == '__main__':
-    category_url = input('Enter category url: ')
-    browser = DarazScrapper(category_url)
-    api = PostAPI(API_URL)
-    if not browser.is_daraz_link():
-        raise Exception('Invalid url')
-    
-    browser.open_browser()
+    # Get the category URL from user input
+    category_url = input('Enter category URL: ')
 
-    items_links = browser.search_item()
-    print(f'Length of items is {len(items_links)}')
-    print(f'Few data of items links : {items_links[0]}')
+    # Create instances of DarazScraper and PostAPI
+    daraz_scraper = DarazScraper(category_url)
+    api = PostAPI(POST_API_URL, GET_API_URL)
 
-    data_list = [browser.collect_item_data(url=url) if (index < 10) else None for index, url in enumerate(items_links)]
+    # Check if the provided URL is a valid Daraz link
+    if not daraz_scraper.is_daraz_link():
+        raise Exception('Invalid URL')
+
+    # Open the web browser
+    daraz_scraper.open_browser()
+
+    # Search for items on the Daraz website
+    items_links = daraz_scraper.search_item()
+    print(f'Number of items found: {len(items_links)}')
+    print(f'Example item link: {items_links[0]}')
+
+    # Collect item data for up to 10 items
+    data_list = [daraz_scraper.collect_item_data(url=url) if (index < 2) else None for index, url in enumerate(items_links)]
     print('All data collected')
 
-    print('Checking connection')
+    # Check the connection to the API
+    print('Checking connection to the API')
     if api.check_connection():
-        print('connection succesfull')
+        print('Connection successful')
     else:
-        print('connection failed')
+        print('Connection failed')
 
-    print('Posting data')
+    # Post collected data to the API
+    print('Posting data to the API')
     api.post_data(data_list)
     print('Data Posted')
 
-    browser.browser.close_browser()
+    # Close the web browser
+    daraz_scraper.browser.close_browser()
