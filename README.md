@@ -123,3 +123,10 @@ Handling a billion records a month is a significant scalability challenge that r
 - Caching: Implement caching mechanisms to reduce the load on the database. Use in-memory caching solutions like Redis to store frequently accessed data. Employ content delivery networks (CDNs) to cache and serve static content (e.g., images, CSS, JavaScript) to reduce server load.
 - Load Balancing: Employ load balancers to distribute incoming traffic across multiple application server instances. Use auto-scaling to dynamically adjust the number of application server instances based on traffic demand.
 - Introduce microservice architecture to Decompose the application into microservices that can scale independently. Each microservice can handle specific functions (e.g., scraping, data storage, API) and can be scaled horizontally as needed.
+
+
+## Demo
+
+[![Demo Video](https://th.bing.com/th/id/R.79e6e440b689585a89c862009638373b?rik=ewsqRWrRb%2fASbQ&pid=ImgRaw&r=01)](https://youtu.be/CqWWIGmhmAI)
+
+Click the image above to watch the demo video.
