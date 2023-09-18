@@ -1,0 +1,36 @@
+1. If your system is relatively simple, please also describe how the "perfect" version of your
+system would look. What additional features or improvements would you add?
+
+This system currently can handle only the category link from daraz and is relatively simple. We can add several features like 
+- add several other vendors like sajilohop, neostore, okdam and so on.
+- analyse the product item with several vendors where we find the cheapest price.
+
+
+2. Describe how you would implement a notification system into this project. What tools or
+frameworks would you use? How would it function?
+
+There are several ways to use Notifications like
+- Email: Python libraries like smtplib and Django's built-in email support to send email notifications.
+- Messaging Services: Services like Twilio or Pusher can be used to send SMS or push notifications.
+Also Django provides a built-in mechanism called "signals" that allows decoupled applications to get notified when certain actions occur elsewhere in the application. You can use signals to trigger notifications when specific events happen in your project.
+
+However, I was planning to implement the email system in the following ways:
+1. Build a Email component using smtplib and a queue system where we can put following logs:
+- When scraping is successful, emit a "scraping_successful" signal.
+- When an error occurs during scraping, emit a "scraping_error" signal.
+- When data is posted successfully to the API, emit a "data_posted" signal.
+2. Then we put these logs into the queue then export it into excel or csv.
+3. Then we send it to the reciepents.
+
+
+Consider scalability: If this system was expected to handle a billion records a month,
+how would you change the design? What architectural decisions would you make to
+ensure smooth operation at this scale?
+
+Handling a billion records a month is a significant scalability challenge that requires careful architectural decisions and optimizations. To ensure smooth operation at this scale, consider the following architectural decisions and changes to the design:
+- Database Optimization: Use a highly scalable and distributed database system like postgresql  that can handle large volumes of data.
+- Implement data partitioning and sharding strategies to distribute data across multiple database nodes.
+- Data Ingestion: Implement a robust data ingestion pipeline that can handle high data volumes efficiently. Consider using tools like Apache Kafka or RabbitMQ for real-time data ingestion. Use batch processing techniques (e.g., Apache Spark) for processing large datasets.
+- Caching: Implement caching mechanisms to reduce the load on the database. Use in-memory caching solutions like Redis to store frequently accessed data. Employ content delivery networks (CDNs) to cache and serve static content (e.g., images, CSS, JavaScript) to reduce server load.
+- Load Balancing: Employ load balancers to distribute incoming traffic across multiple application server instances. Use auto-scaling to dynamically adjust the number of application server instances based on traffic demand.
+- Indtroduce microservice architecture to Decompose the application into microservices that can scale independently. Each microservice can handle specific functions (e.g., scraping, data storage, API) and can be scaled horizontally as needed.

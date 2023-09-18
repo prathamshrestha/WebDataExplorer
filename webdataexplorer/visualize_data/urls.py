@@ -1,8 +1,10 @@
 from django.contrib import admin
 from django.urls import path
-from .views import VisualizeView, daraz_data_post
+from .views import VisualizeView, ScrapePostView
 
+
+# TODO: 3. READme make more clear about the purpose of the project
 urlpatterns = [
-    path("data/", VisualizeView.as_view(), name="visualize data"),
-    path("create/", daraz_data_post, name="create data"),
+    path("scrape_data_list/", VisualizeView.as_view(), name="visualize data"),
+    path("api/create/", ScrapePostView.as_view(), name="create data"),
 ]
