@@ -20,5 +20,5 @@ from visualize_data import urls as visualize_url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('visualize/', include(visualize_url))
+    path('', include(visualize_url))
 ]

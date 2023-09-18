@@ -33,7 +33,7 @@
 ## Documentation
 
 **1. Introduction** 
-The Web Scraper is a Python script designed to extract product information from the website currently only for Daraz. It utilizes web scraping techniques to gather data such as product names, categories, prices, ratings, and more. And it posts to an API in django server and then displays into the webapp developed by django server.
+The Web Scraper is a Python script designed to extract product information from the website currently only for Daraz. It utilizes web scraping techniques to gather data such as product names, categories, prices, ratings, and more. And it posts the scrapped data item to the API server, this api server is developed using Django framework.
 
 **2. Dependencies**
 
@@ -41,15 +41,14 @@ RPA.Browser.Selenium: This module provides functionalities for browser automatio
 
 Django : This framework is used to create APIs and webapp.
 
-Requests: This library is used for making HTTP requests to interact with APIs.
 
 **3. Project Overview**
 This project comprises a web application for displaying scraped data and an API for posting the scraped data, all built using the Django framework.
 
 **4. System Description**
-- Web Application: The web application, accessible at webexplorer, serves as the interface for viewing the scraped data. When the Django server is running, this [link](http://localhost:8000/visualize/scrape_data_list/) opens automatically.
+- Web Application: The web application, accessible at webexplorer, serves as the interface for viewing the scraped data. When the Django server is running, this browsable [link](http://localhost:8000/scrape_data_list/) opens the page to visulaize all the scraped data.
 - Streamlined Data Posting: An added feature of this project is the streamlined data posting process. Instead of inserting data directly into the database, it is sent directly to the Django server. This data can then be seamlessly displayed within the application. 
-This approach simplifies data management, providing a more efficient and straightforward way to share and explore scraped data within the project.
+This approach simplifies data management, providing a more efficient and straightforward way to share and explore scraped data within the project. 
 
 
 ## Installation
@@ -86,13 +85,12 @@ With the Django project's server running, you can now run the scraper script:
 #### 1. If your system is relatively simple, please also describe how the "perfect" version of your system would look. What additional features or improvements would you add?
 
 This system currently can handle only the category link from daraz and is relatively simple. We can add several features like 
-- add several other vendors like sajilohop, neostore, okdam and so on.
-- analyse the product item with several vendors where we find the cheapest price.
-
+- add several other vendors like sastodeal, sajilohop, neostore, okdam and so on and apply factory design pattern with multithreading.
+- Market analysis of the product.
 
 #### 2. Describe how you would implement a notification system into this project. What tools or frameworks would you use? How would it function?
 
-There are several ways to use Notifications like
+There are several ways to implement Notifications like
 - Email: Python libraries like smtplib and Django's built-in email support to send email notifications.
 - Messaging Services: Services like Twilio or Pusher can be used to send SMS or push notifications.
 Also Django provides a built-in mechanism called "signals" that allows decoupled applications to get notified when certain actions occur elsewhere in the application. You can use signals to trigger notifications when specific events happen in your project.

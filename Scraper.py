@@ -4,8 +4,8 @@ from RPA.Browser.Selenium import Selenium
 # Define constants
 TIMEOUT = 10
 ScrapeItem = 2
-POST_API_URL = "http://localhost:8000/visualize/api/item/"
-GET_API_URL = "http://localhost:8000/visualize/scrape_data_list/"
+POST_API_URL = "http://localhost:8000/api/item/"
+GET_API_URL = "http://localhost:8000/scrape_data_list/"
 
 XPATH = {
     "items": "//div[@class='gridItem--Yd0sa']//div[@class='info--ifj7U']//a",
