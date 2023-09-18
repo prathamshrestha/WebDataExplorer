@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Product Visualization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 24px;
+            color: #333;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            border: 2px solid #3498db;
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: #f2f2f2;
+            color: #333;
+        }
+        strong {
+            font-weight: bold;
+            color: #3498db;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Product List</h1>
+        <ul>
+            {% for product in data %}
+                <li>
+                    <strong>Name:</strong> {{ product.name }}<br>
+                    <strong>Vendor:</strong> {{ product.vendor.vendor_name }}<br>
+                    <strong>Category:</strong> {{ product.category.category_name }}<br>
+                    <strong>Rating:</strong> {{ product.rating }}<br>
+                    <strong>Price:</strong> {{ product.price }}<br>
+                    <strong>Sold By:</strong> {{ product.sold_by }}<br>
+                    <strong>Reviews:</strong> {{ product.reviews }}<br>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
