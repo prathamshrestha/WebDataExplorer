@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import DarazModel
+from .models import Product
 
 # Register your models here.
-admin.site.register(DarazModel)
+admin.site.register(Product)

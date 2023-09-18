@@ -1,41 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Table</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Product Visualization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 24px;
+            color: #333;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            border: 2px solid #3498db;
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: #f2f2f2;
+            color: #333;
+        }
+        strong {
+            font-weight: bold;
+            color: #3498db;
+        }
+    </style>
 </head>
 <body>
-    <h1>Data Table</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>S.N.</th>
-                <th>Name</th>
-                <th>Rating</th>
-                <th>Price</th>
-                <th>Reviews</th>
-                <th>Sold By</th>
-                <th>Category</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in data %}
-            <tr>
-                <td>{{ item.sn }}</td>
-                <td>{{ item.name }}</td>
-                <td>{{ item.rating }}</td>
-                <td>{{ item.price }}</td>
-                <td>{{ item.reviews }}</td>
-                <td>{{ item.sold_by }}</td>
-                <td>{{ item.category }}</td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="9">No data available.</td>
-            </tr>
+    <div class="container">
+        <h1>Product List</h1>
+        <ul>
+            {% for product in data %}
+                <li>
+                    <strong>Name:</strong> {{ product.name }}<br>
+                    <strong>Vendor:</strong> {{ product.vendor.vendor_name }}<br>
+                    <strong>Category:</strong> {{ product.category.category_name }}<br>
+                    <strong>Rating:</strong> {{ product.rating }}<br>
+                    <strong>Price:</strong> {{ product.price }}<br>
+                    <strong>Reviews:</strong> {{ product.reviews }}<br>
+                    <strong>Sold By:</strong> {{ product.sold_by }}<br>
+                </li>
             {% endfor %}
-        </tbody>
-    </table>
+        </ul>
+    </div>
 </body>
 </html>

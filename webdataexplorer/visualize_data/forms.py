@@ -1,7 +1,7 @@
 from django import forms
-from .models import DarazModel  # Import your model here
+from .models import Product  # Import your model here
 
-class DarazModelForm(forms.ModelForm):
+class ProductForm(forms.ModelForm):
     class Meta:
-        model = DarazModel
-        fields = ['name', 'rating', 'price', 'reviews', 'sold_by', 'category']
+        model = Product
+        fields = ['name', 'vendor', 'rating', 'price', 'reviews', 'sold_by', 'category']

@@ -3,8 +3,9 @@ from RPA.Browser.Selenium import Selenium
 
 # Define constants
 TIMEOUT = 10
-POST_API_URL = "http://localhost:8000/visualize/create/"
-GET_API_URL = "http://localhost:8000/visualize/data/"
+ScrapeItem = 2
+POST_API_URL = "http://localhost:8000/visualize/api/create/"
+GET_API_URL = "http://localhost:8000/visualize/scrape_data_list/"
 
 XPATH = {
     "items": "//div[@class='gridItem--Yd0sa']//div[@class='info--ifj7U']//a",
@@ -89,6 +90,7 @@ class DarazScraper:
         items_data = {}
         self.browser.go_to(url)
         temp_item = {}
+        temp_item["vendor"] = "Daraz"
         try:
             self.browser.wait_until_element_is_visible(XPATH["about"])
             self.browser.scroll_element_into_view(XPATH["about"])
@@ -151,7 +153,9 @@ class DarazScraper:
                 if index < 4
             ]
             print(reviews_list)
-            temp_item["reviews"] = ", ".join(reviews_list)
+
+            # temp_item["reviews"] = ", ".join(reviews_list)
+            temp_item["reviews"] = reviews_list
         except Exception as e:
             temp_item["reviews"] = "no reviews"
             print(e)
@@ -208,7 +212,7 @@ class PostAPI:
             if data is None:
                 break
             conn = requests.post(self.post_api_url, data=data)
-            if conn.status_code == 200:
+            if conn.status_code == 201:
                 print(f"Post Successful")
             else:
                 print(f"Post unsuccessful")
@@ -236,7 +240,7 @@ if __name__ == "__main__":
 
     # Collect item data for up to 10 items
     data_list = [
-        daraz_scraper.collect_item_data(url=url) if (index < 2) else None
+        daraz_scraper.collect_item_data(url=url) if (index < ScrapeItem) else None
         for index, url in enumerate(items_links)
     ]
     print("All data collected")
