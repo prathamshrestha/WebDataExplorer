@@ -33,7 +33,7 @@
 ## Documentation
 
 **1. Introduction** 
-The Web Scraper is a Python script designed to extract product information from the website currently only for Daraz. It utilizes web scraping techniques to gather data such as product names, categories, prices, ratings, and more. And it posts the scrapped data item to the API server, this api server is developed using Django framework. 
+The Web Scraper is a Python script designed to extract product information from the website currently only for Daraz. It utilizes web scraping techniques to gather data such as product names, categories, prices, ratings, and more of currently 10 items and can be changed. And it posts the scrapped data item to the API server, this api server is developed using Django framework. 
 
 I used Selenium for web scraping tasks that require interacting with dynamic web pages, handling JavaScript, and mimicking user interactions like clicking buttons or scrolling. It provides a high level of control and flexibility.
 
@@ -59,7 +59,6 @@ This project comprises a web application for displaying scraped data and an API 
 - Web Application: The web application, accessible at webexplorer, serves as the interface for viewing the scraped data. When the Django server is running, this browsable [link](http://localhost:8000/scrape_data_list/) opens the page to visulaize all the scraped data.
 - Streamlined Data Posting: An added feature of this project is the streamlined data posting process. Instead of inserting data directly into the database, it is sent directly to the Django server. This data can then be seamlessly displayed within the application. 
 - This approach simplifies data management, providing a more efficient and straightforward way to share and explore scraped data within the project. 
-- 
 
 ## Installation
 
