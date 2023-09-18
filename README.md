@@ -33,7 +33,7 @@
 ## Documentation
 
 **1. Introduction** 
-The Web Scraper is a Python script designed to extract product information from the website currently only for Daraz. It utilizes web scraping techniques to gather data such as product names, categories, prices, ratings, and more. And it posts the scrapped data item to the API server, this api server is developed using Django framework. 
+The Web Scraper is a Python script designed to extract product information from the website currently only for Daraz. It utilizes web scraping techniques to gather data such as product names, categories, prices, ratings, and more of currently 10 items and can be changed. And it posts the scrapped data item to the API server, this api server is developed using Django framework. 
 
 I used Selenium for web scraping tasks that require interacting with dynamic web pages, handling JavaScript, and mimicking user interactions like clicking buttons or scrolling. It provides a high level of control and flexibility.
 
@@ -59,7 +59,6 @@ This project comprises a web application for displaying scraped data and an API 
 - Web Application: The web application, accessible at webexplorer, serves as the interface for viewing the scraped data. When the Django server is running, this browsable [link](http://localhost:8000/scrape_data_list/) opens the page to visulaize all the scraped data.
 - Streamlined Data Posting: An added feature of this project is the streamlined data posting process. Instead of inserting data directly into the database, it is sent directly to the Django server. This data can then be seamlessly displayed within the application. 
 - This approach simplifies data management, providing a more efficient and straightforward way to share and explore scraped data within the project. 
-- 
 
 ## Installation
 
@@ -106,12 +105,13 @@ There are several ways to implement Notifications like
 Also Django provides a built-in mechanism called "signals" that allows decoupled applications to get notified when certain actions occur elsewhere in the application. You can use signals to trigger notifications when specific events happen in your project.
 
 However, I was planning to implement the email system in the following ways:
-1. Build a Email component using smtplib and a queue system where we can put following logs:
-- When scraping is successful, emit a "scraping_successful" signal.
-- When an error occurs during scraping, emit a "scraping_error" signal.
-- When data is posted successfully to the API, emit a "data_posted" signal.
-2. Then we put these logs into the queue then export it into excel or csv.
-3. Then we send it to the reciepents.
+1. Create an Email module using the smtplib library along with a queue system. This module should be capable of logging the following events:
+- Emit a "scraping_successful" signal when scraping is completed successfully.
+- Emit a "scraping_error" signal when an error occurs during the scraping process.
+- Emit a "data_posted" signal when data is successfully posted to the API.
+2. After logging these events, place them in a queue for further processing.
+3. Export the queued logs into either an Excel or CSV format.
+4. Finally, send the exported logs to the intended recipients via email.
 
 
 #### 3. Consider scalability: If this system was expected to handle a billion records a month, how would you change the design? What architectural decisions would you make to ensure smooth operation at this scale?
@@ -122,4 +122,11 @@ Handling a billion records a month is a significant scalability challenge that r
 - Data Ingestion: Implement a robust data ingestion pipeline that can handle high data volumes efficiently. Consider using tools like Apache Kafka or RabbitMQ for real-time data ingestion. Use batch processing techniques (e.g., Apache Spark) for processing large datasets.
 - Caching: Implement caching mechanisms to reduce the load on the database. Use in-memory caching solutions like Redis to store frequently accessed data. Employ content delivery networks (CDNs) to cache and serve static content (e.g., images, CSS, JavaScript) to reduce server load.
 - Load Balancing: Employ load balancers to distribute incoming traffic across multiple application server instances. Use auto-scaling to dynamically adjust the number of application server instances based on traffic demand.
-- Indtroduce microservice architecture to Decompose the application into microservices that can scale independently. Each microservice can handle specific functions (e.g., scraping, data storage, API) and can be scaled horizontally as needed.
+- Introduce microservice architecture to Decompose the application into microservices that can scale independently. Each microservice can handle specific functions (e.g., scraping, data storage, API) and can be scaled horizontally as needed.
+
+
+## Demo
+
+[![Demo Video](https://th.bing.com/th/id/R.79e6e440b689585a89c862009638373b?rik=ewsqRWrRb%2fASbQ&pid=ImgRaw&r=01)](https://youtu.be/CqWWIGmhmAI)
+
+Click the image above to watch the demo video.
