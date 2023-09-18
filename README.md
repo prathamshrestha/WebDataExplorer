@@ -106,12 +106,13 @@ There are several ways to implement Notifications like
 Also Django provides a built-in mechanism called "signals" that allows decoupled applications to get notified when certain actions occur elsewhere in the application. You can use signals to trigger notifications when specific events happen in your project.
 
 However, I was planning to implement the email system in the following ways:
-1. Build a Email component using smtplib and a queue system where we can put following logs:
-- When scraping is successful, emit a "scraping_successful" signal.
-- When an error occurs during scraping, emit a "scraping_error" signal.
-- When data is posted successfully to the API, emit a "data_posted" signal.
-2. Then we put these logs into the queue then export it into excel or csv.
-3. Then we send it to the reciepents.
+1. Create an Email module using the smtplib library along with a queue system. This module should be capable of logging the following events:
+- Emit a "scraping_successful" signal when scraping is completed successfully.
+- Emit a "scraping_error" signal when an error occurs during the scraping process.
+- Emit a "data_posted" signal when data is successfully posted to the API.
+2. After logging these events, place them in a queue for further processing.
+3. Export the queued logs into either an Excel or CSV format.
+4. Finally, send the exported logs to the intended recipients via email.
 
 
 #### 3. Consider scalability: If this system was expected to handle a billion records a month, how would you change the design? What architectural decisions would you make to ensure smooth operation at this scale?
@@ -122,4 +123,4 @@ Handling a billion records a month is a significant scalability challenge that r
 - Data Ingestion: Implement a robust data ingestion pipeline that can handle high data volumes efficiently. Consider using tools like Apache Kafka or RabbitMQ for real-time data ingestion. Use batch processing techniques (e.g., Apache Spark) for processing large datasets.
 - Caching: Implement caching mechanisms to reduce the load on the database. Use in-memory caching solutions like Redis to store frequently accessed data. Employ content delivery networks (CDNs) to cache and serve static content (e.g., images, CSS, JavaScript) to reduce server load.
 - Load Balancing: Employ load balancers to distribute incoming traffic across multiple application server instances. Use auto-scaling to dynamically adjust the number of application server instances based on traffic demand.
-- Indtroduce microservice architecture to Decompose the application into microservices that can scale independently. Each microservice can handle specific functions (e.g., scraping, data storage, API) and can be scaled horizontally as needed.
+- Introduce microservice architecture to Decompose the application into microservices that can scale independently. Each microservice can handle specific functions (e.g., scraping, data storage, API) and can be scaled horizontally as needed.
