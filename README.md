@@ -33,7 +33,17 @@
 ## Documentation
 
 **1. Introduction** 
-The Web Scraper is a Python script designed to extract product information from the website currently only for Daraz. It utilizes web scraping techniques to gather data such as product names, categories, prices, ratings, and more. And it posts the scrapped data item to the API server, this api server is developed using Django framework.
+The Web Scraper is a Python script designed to extract product information from the website currently only for Daraz. It utilizes web scraping techniques to gather data such as product names, categories, prices, ratings, and more. And it posts the scrapped data item to the API server, this api server is developed using Django framework. 
+
+I used Selenium for web scraping tasks that require interacting with dynamic web pages, handling JavaScript, and mimicking user interactions like clicking buttons or scrolling. It provides a high level of control and flexibility.
+
+In this project, Django serves two primary purposes:
+
+Web Application: Django is used to create the web application that displays the scraped data. It handles routing, views, and templates, allowing you to present the scraped data in a user-friendly format.
+
+API Development: Django is also used to develop the API endpoints. APIs are crucial for communication between different components of the system, enabling the seamless transfer of data from the web scraping process to the web application.
+
+The scrapper and the visualization server communicate together through API requests. 
 
 **2. Dependencies**
 
@@ -48,8 +58,8 @@ This project comprises a web application for displaying scraped data and an API 
 **4. System Description**
 - Web Application: The web application, accessible at webexplorer, serves as the interface for viewing the scraped data. When the Django server is running, this browsable [link](http://localhost:8000/scrape_data_list/) opens the page to visulaize all the scraped data.
 - Streamlined Data Posting: An added feature of this project is the streamlined data posting process. Instead of inserting data directly into the database, it is sent directly to the Django server. This data can then be seamlessly displayed within the application. 
-This approach simplifies data management, providing a more efficient and straightforward way to share and explore scraped data within the project. 
-
+- This approach simplifies data management, providing a more efficient and straightforward way to share and explore scraped data within the project. 
+- 
 
 ## Installation
 
