@@ -4,7 +4,7 @@ from RPA.Browser.Selenium import Selenium
 # Define constants
 TIMEOUT = 10
 ScrapeItem = 2
-POST_API_URL = "http://localhost:8000/visualize/api/create/"
+POST_API_URL = "http://localhost:8000/visualize/api/item/"
 GET_API_URL = "http://localhost:8000/visualize/scrape_data_list/"
 
 XPATH = {
